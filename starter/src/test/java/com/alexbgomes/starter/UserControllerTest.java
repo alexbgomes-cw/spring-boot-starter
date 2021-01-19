@@ -372,7 +372,6 @@ public class UserControllerTest {
                 .andDo(print()).andExpect(status().isOk())
                 .andReturn();
 
-        //FIX THIS
         assertThat(mvcResult.getResponse().getContentAsString(), CoreMatchers.containsString(String.format("User %s logged in at ", user.getUsername())));
 
         mvcResult = mockMvc.perform(post("/api/unregister")
