@@ -1,0 +1,1 @@
+INSERT INTO USERS(USERNAME, PWD) VALUES('admin', 'admin');
