@@ -1,7 +1,9 @@
 package com.alexbgomes.starter.controllers;
 
 import com.alexbgomes.starter.business.service.UserService;
+import com.alexbgomes.starter.data.dto.UserDTO;
 import com.alexbgomes.starter.data.entity.User;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 public class UserController {
+    private static final ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
     private UserService userService;
@@ -24,29 +27,23 @@ public class UserController {
     }
 
     @PostMapping("/api/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
-        Optional<ResponseEntity<String>> invalidReponse = userService.getResponseIfInvalid(user);
-        if (invalidReponse.isPresent())
-            return invalidReponse.get();
-
-        return userService.setUser(user);
+    public ResponseEntity<String> registerUser(@RequestBody UserDTO userDTO) {
+        User user = modelMapper.map(userDTO, User.class);
+        Optional<ResponseEntity<String>> invalidResponse = userService.getResponseIfInvalid(user);
+        return invalidResponse.orElse(userService.setUser((user)));
     }
 
     @PostMapping("/api/login")
-    public ResponseEntity<String> loginUser(@RequestBody User user) {
+    public ResponseEntity<String> loginUser(@RequestBody UserDTO userDTO) {
+        User user = modelMapper.map(userDTO, User.class);
         Optional<ResponseEntity<String>> invalidResponse = userService.getResponseIfInvalid(user, true);
-        if (invalidResponse.isPresent())
-            return invalidResponse.get();
-
-        return userService.loginUser(user);
+        return invalidResponse.orElse(userService.loginUser((user)));
     }
 
     @PostMapping("/api/unregister")
-    public ResponseEntity<String> unregisterUser(@RequestBody User user) {
+    public ResponseEntity<String> unregisterUser(@RequestBody UserDTO userDTO) {
+        User user = modelMapper.map(userDTO, User.class);
         Optional<ResponseEntity<String>> invalidResponse = userService.getResponseIfInvalid(user, true);
-        if (invalidResponse.isPresent())
-            return invalidResponse.get();
-
-        return userService.rmUser(user);
+        return invalidResponse.orElse(userService.rmUser((user)));
     }
 }

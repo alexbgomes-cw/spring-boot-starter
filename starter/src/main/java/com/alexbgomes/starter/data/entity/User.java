@@ -4,15 +4,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="USERS")
+@Table(name = "USERS")
 public class User {
     @Id
-    @Column(name="USERNAME")
+    @NotNull
     private String username;
-
-    @Column(name="PWD")
+    @Column
+    @NotNull
     private String pwd;
 
     public User(String username, String pwd) {
@@ -26,10 +27,6 @@ public class User {
 
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPwd() {
