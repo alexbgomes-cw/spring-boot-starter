@@ -20,6 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/* TODO: Add beforeEach for cases, use a lib to generate fake user data for cases, move some cases into a single test
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 class UserControllerTest {

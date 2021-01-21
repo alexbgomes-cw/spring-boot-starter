@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+/* TODO: Remove validation from here into Custom Validator, preserve messages to return
+ */
 @Service
 public class UserService {
     private final UserRepository userRepository;
