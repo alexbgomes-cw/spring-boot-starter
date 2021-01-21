@@ -2,6 +2,7 @@ package com.alexbgomes.starter;
 
 import com.alexbgomes.starter.data.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +11,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.hamcrest.CoreMatchers;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -30,7 +30,7 @@ public class UserControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void testDataSql() throws Exception {
+    void testDataSql() throws Exception {
         final String user = "admin";
         final String pwd = "admin";
 
@@ -45,7 +45,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testUserRegistration_badUsernameLength() throws Exception {
+    void testUserRegistration_badUsernameLength() throws Exception {
         final String username = "1234567";
         final String pwd = "@Bc23j3sd^3sd";
         final User user = new User(username, pwd);
@@ -65,7 +65,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testUserRegistration_badUsernameCharacters() throws Exception {
+    void testUserRegistration_badUsernameCharacters() throws Exception {
         final String username = "1234567!";
         final String pwd = "@Bc23j3sd^3sd";
         final User user = new User(username, pwd);
@@ -85,7 +85,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testUserRegistration_badPwdLength() throws Exception {
+    void testUserRegistration_badPwdLength() throws Exception {
         final String username = "12345678";
         final String pwd = "@Bc23j3sd";
         final User user = new User(username, pwd);
@@ -105,7 +105,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testUserRegistration_badPwdCharacters() throws Exception {
+    void testUserRegistration_badPwdCharacters() throws Exception {
         final String username = "12345678";
         final String pwd = "@Bc23j3sd^sd+\\";
         final User user = new User(username, pwd);
@@ -125,7 +125,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testUserRegistration_success() throws Exception {
+    void testUserRegistration_success() throws Exception {
         final String username = "alexgomes";
         final String pwd = "P@ssword12";
         final User user = new User(username, pwd);
@@ -133,7 +133,7 @@ public class UserControllerTest {
         MvcResult mvcResult = mockMvc.perform(post("/api/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))
-                .andDo(print()).andExpect(status().isOk())
+                .andDo(print()).andExpect(status().isCreated())
                 .andReturn();
 
         Assertions.assertEquals("New user created.", mvcResult.getResponse().getContentAsString());
@@ -158,7 +158,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testUserRegistration_userAlreadyExists() throws Exception {
+    void testUserRegistration_userAlreadyExists() throws Exception {
         final String username = "alexgomes";
         final String pwd = "P@ssword12";
         final User user = new User(username, pwd);
@@ -166,7 +166,7 @@ public class UserControllerTest {
         MvcResult mvcResult = mockMvc.perform(post("/api/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))
-                .andDo(print()).andExpect(status().isOk())
+                .andDo(print()).andExpect(status().isCreated())
                 .andReturn();
 
         Assertions.assertEquals("New user created.", mvcResult.getResponse().getContentAsString());
@@ -204,7 +204,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testUserLogin_UserDNE() throws Exception {
+    void testUserLogin_UserDNE() throws Exception {
         final String username = "johndoe123";
         final String pwd = "@Bc23j3sd^3sd";
         final User user = new User(username, pwd);
@@ -219,7 +219,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testUserLogin_badPwdLength() throws Exception {
+    void testUserLogin_badPwdLength() throws Exception {
         final String username = "alexgomes";
         final String pwd = "P@ssword12";
         final User user = new User(username, pwd);
@@ -229,7 +229,7 @@ public class UserControllerTest {
         MvcResult mvcResult = mockMvc.perform(post("/api/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))
-                .andDo(print()).andExpect(status().isOk())
+                .andDo(print()).andExpect(status().isCreated())
                 .andReturn();
 
         Assertions.assertEquals("New user created.", mvcResult.getResponse().getContentAsString());
@@ -262,7 +262,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testUserLogin_badPwdCharacters() throws Exception {
+    void testUserLogin_badPwdCharacters() throws Exception {
         final String username = "alexgomes";
         final String pwd = "P@ssword12";
         final User user = new User(username, pwd);
@@ -272,7 +272,7 @@ public class UserControllerTest {
         MvcResult mvcResult = mockMvc.perform(post("/api/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))
-                .andDo(print()).andExpect(status().isOk())
+                .andDo(print()).andExpect(status().isCreated())
                 .andReturn();
 
         Assertions.assertEquals("New user created.", mvcResult.getResponse().getContentAsString());
@@ -305,7 +305,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testUserLogin_incorrectPassword() throws Exception {
+    void testUserLogin_incorrectPassword() throws Exception {
         final String username = "alexgomes";
         final String pwd = "P@ssword12";
         final User user = new User(username, pwd);
@@ -315,7 +315,7 @@ public class UserControllerTest {
         MvcResult mvcResult = mockMvc.perform(post("/api/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))
-                .andDo(print()).andExpect(status().isOk())
+                .andDo(print()).andExpect(status().isCreated())
                 .andReturn();
 
         Assertions.assertEquals("New user created.", mvcResult.getResponse().getContentAsString());
@@ -348,7 +348,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testUserLogin_success() throws Exception {
+    void testUserLogin_success() throws Exception {
         final String username = "alexgomes";
         final String pwd = "P@ssword12";
         final User user = new User(username, pwd);
@@ -356,7 +356,7 @@ public class UserControllerTest {
         MvcResult mvcResult = mockMvc.perform(post("/api/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))
-                .andDo(print()).andExpect(status().isOk())
+                .andDo(print()).andExpect(status().isCreated())
                 .andReturn();
 
         Assertions.assertEquals("New user created.", mvcResult.getResponse().getContentAsString());

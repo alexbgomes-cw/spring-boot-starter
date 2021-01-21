@@ -1,4 +1,4 @@
-package com.alexbgomes.starter;
+package com.alexbgomes.starter.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
