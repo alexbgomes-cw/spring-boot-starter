@@ -4,6 +4,7 @@ import com.alexbgomes.starter.data.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -47,6 +48,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Disabled
     void testUserRegistration_badUsernameLength() throws Exception {
         final String username = "1234567";
         final String pwd = "@Bc23j3sd^3sd";
@@ -67,6 +69,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Disabled
     void testUserRegistration_badUsernameCharacters() throws Exception {
         final String username = "1234567!";
         final String pwd = "@Bc23j3sd^3sd";
@@ -87,6 +90,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Disabled
     void testUserRegistration_badPwdLength() throws Exception {
         final String username = "12345678";
         final String pwd = "@Bc23j3sd";
@@ -107,6 +111,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Disabled
     void testUserRegistration_badPwdCharacters() throws Exception {
         final String username = "12345678";
         final String pwd = "@Bc23j3sd^sd+\\";
@@ -127,6 +132,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Disabled
     void testUserRegistration_success() throws Exception {
         final String username = "alexgomes";
         final String pwd = "P@ssword12";
@@ -160,6 +166,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Disabled
     void testUserRegistration_userAlreadyExists() throws Exception {
         final String username = "alexgomes";
         final String pwd = "P@ssword12";
@@ -206,6 +213,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Disabled
     void testUserLogin_UserDNE() throws Exception {
         final String username = "johndoe123";
         final String pwd = "@Bc23j3sd^3sd";
@@ -221,6 +229,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Disabled
     void testUserLogin_badPwdLength() throws Exception {
         final String username = "alexgomes";
         final String pwd = "P@ssword12";
@@ -264,6 +273,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Disabled
     void testUserLogin_badPwdCharacters() throws Exception {
         final String username = "alexgomes";
         final String pwd = "P@ssword12";
@@ -307,6 +317,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Disabled
     void testUserLogin_incorrectPassword() throws Exception {
         final String username = "alexgomes";
         final String pwd = "P@ssword12";
@@ -350,6 +361,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Disabled
     void testUserLogin_success() throws Exception {
         final String username = "alexgomes";
         final String pwd = "P@ssword12";
