@@ -32,6 +32,9 @@ public class UserService {
     }
 
     private Optional<User> getUserByUsername(String username) {
+        if (username == null) {
+            return Optional.empty();
+        }
         return userRepository.findById(username);
     }
 
